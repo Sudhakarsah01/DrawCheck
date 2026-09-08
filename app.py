@@ -14,7 +14,6 @@ from io import BytesIO
 
 st.set_page_config(
     page_title="DrawCheck",
-    #page_icon="🏗️",
     layout="wide",
     initial_sidebar_state="collapsed"
 )
@@ -61,7 +60,7 @@ footer {{visibility: hidden;}}
     padding: 0;
     margin: -1rem -1rem 2rem -1rem;
     border-radius: 0 0 16px 16px;
-    box-shadow: 0 4px 20px rgba(61,75,160,0.25);
+    box-shadow: 0 4px 20px rgba(61,75,140,0.25);
 }}
 .header-inner {{
     display: flex;
