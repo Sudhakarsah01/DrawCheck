@@ -279,9 +279,9 @@ def img_to_b64(path):
     except:
         return ""
 
-logo_b64 = img_to_b64("/home/sgdn/Downloads/hvac_issue_checker/logo_transparent.png")
-if not logo_b64:
-    logo_b64 = img_to_b64("logo_transparent.png")
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+logo_b64 = img_to_b64(os.path.join(BASE_DIR, "logo_transparent.png"))
 
 logo_html = f'<img src="data:image/png;base64,{logo_b64}" style="height:50px"/>' if logo_b64 else \
             '<span style="color:white;font-weight:700;font-size:18px">SG Design Nepal</span>'
