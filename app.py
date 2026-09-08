@@ -18,6 +18,8 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
+
+
 # ── Brand colors ──────────────────────────────────────────
 PRIMARY   = "#3D4BA0"
 PRIMARY_D = "#2C3680"
@@ -280,6 +282,9 @@ def img_to_b64(path):
         return ""
 
 
+
+
+
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 logo_b64 = img_to_b64(os.path.join(BASE_DIR, "logo_transparent.png"))
 
@@ -292,10 +297,9 @@ st.markdown(f"""
   <div class="header-inner">
     <div class="header-logo">{logo_html}</div>
     <div class="header-title">
-      <h1>DrawCheck AI</h1>
+      <h1>DrawCheck</h1>
       <p>HVAC Drawing QA Annotation Extractor</p>
     </div>
-    <div class="header-badge">v1.0</div>
   </div>
 </div>
 """, unsafe_allow_html=True)
@@ -447,6 +451,9 @@ def extract_all_markups(pdf_bytes):
                         dist = ((ft["cx"]-cx)**2+(ft["cy"]-cy)**2)**0.5
                         if dist < bd: bd=dist; bt=ft["content"]
                     comment = f"[Cloud near: {bt[:60]}]" if bt else f"[Cloud at {location_label(cx,cy,pw,ph)}]"
+
+
+
 
             elif atype == "Ink":
                 if content and len(content) > 3:
