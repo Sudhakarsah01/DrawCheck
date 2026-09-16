@@ -532,6 +532,20 @@ if not st.session_state.get("pdf_loaded"):
 pdf_file=st.file_uploader("Upload PDF",type=["pdf"],label_visibility="collapsed")
 
 
+if not pdf_file:
+    st.markdown("""<div style="border:2px dashed #5C6BC0;border-radius:16px;
+    background:#E8EAF6;padding:40px;text-align:center;margin:12px 0">
+    <div style="font-size:48px">📄</div>
+    <div style="font-family:Poppins,sans-serif;font-size:18px;font-weight:600;
+    color:#3D4BA0;margin-bottom:6px">Drop your QA-marked drawing PDF here</div>
+    <div style="font-size:13px;color:#4A4A6A">Supports Bluebeam · Adobe Acrobat · Any annotated PDF</div>
+    </div>""",unsafe_allow_html=True)
+    st.markdown("<br>",unsafe_allow_html=True)
+    ##c1,c2,c3=st.columns(3)
+    ##c1.markdown('<div class="fcard"><div class="ficon">🔍</div><div class="ftitle">Extracts All QA Annotations</div><div class="fdesc">FreeText comments — every typed QA reviewer comment captured</div></div>',unsafe_allow_html=True)
+    ##c2.markdown('<div class="fcard"><div class="ficon">🏷️</div><div class="ftitle">Auto HVAC Tag Detection</div><div class="fdesc">Automatically finds the nearest FCU, FD, OAF tag for each markup</div></div>',unsafe_allow_html=True)
+    ##c3.markdown('<div class="fcard"><div class="ficon">📊</div><div class="ftitle">Professional Excel Report</div><div class="fdesc">Summary + Master sheet + Per-page tabs with severity color coding</div></div>',unsafe_allow_html=True)
+    st.stop() 
 
 if st.session_state.get("pdf_name")!=pdf_file.name:
     with st.spinner("Loading pages..."):
