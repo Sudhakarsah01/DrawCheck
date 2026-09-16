@@ -76,7 +76,7 @@ logo_html = f'<img src="data:image/png;base64,{logo}" style="height:50px"/>' if 
 st.markdown(f"""
 <div class="hbar"><div class="hinner">
   <div>{logo_html}</div>
-  <div class="htitle"><h1>🏗️ DrawCheck AI</h1>
+  <div class="htitle"><h1>DrawCheck</h1>
     <p>HVAC Drawing QA Annotation Extractor — SG Design Nepal</p></div>
   <div class="hbadge">v3.0 Professional</div>
 </div></div>""", unsafe_allow_html=True)
