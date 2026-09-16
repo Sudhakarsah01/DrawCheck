@@ -547,6 +547,10 @@ if not pdf_file:
     ##c3.markdown('<div class="fcard"><div class="ficon">📊</div><div class="ftitle">Professional Excel Report</div><div class="fdesc">Summary + Master sheet + Per-page tabs with severity color coding</div></div>',unsafe_allow_html=True)
     st.stop() 
 
+
+
+
+
 if st.session_state.get("pdf_name")!=pdf_file.name:
     with st.spinner("Loading pages..."):
         pdf_bytes=pdf_file.read()
