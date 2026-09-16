@@ -10,7 +10,7 @@ import openpyxl
 from openpyxl.styles import Font, PatternFill, Alignment, Border, Side
 from openpyxl.utils import get_column_letter
 
-st.set_page_config(page_title="DrawCheck AI", page_icon="🏗️", layout="wide")
+st.set_page_config(page_title="DrawCheck", page_icon="🏗️", layout="wide")
 
 # ── Brand ─────────────────────────────────────────────────
 PRIMARY="#3D4BA0"; PRIMARY_D="#2C3680"; PRIMARY_L="#E8EAF6"
@@ -73,13 +73,21 @@ logo = img_b64(os.path.join(BASE,"logo_transparent.png"))
 logo_html = f'<img src="data:image/png;base64,{logo}" style="height:50px"/>' if logo else \
             '<span style="color:white;font-weight:700;font-size:18px">SG Design Nepal</span>'
 
+
+
+
+
+
+
 st.markdown(f"""
 <div class="hbar"><div class="hinner">
   <div>{logo_html}</div>
   <div class="htitle"><h1>DrawCheck</h1>
     <p>HVAC Drawing QA Annotation Extractor — SG Design Nepal</p></div>
-  <div class="hbadge">v3.0 Professional</div>
+  <div class="hbadge">v1.0 Professional</div>
 </div></div>""", unsafe_allow_html=True)
+
+
 
 # ════════════════════════════════════════════════════════════
 # EXTRACTION ENGINE
@@ -237,6 +245,8 @@ def _classify(text):
         if any(k in t for k in kws): cat=category; break
     return cat,sev
 
+
+
 def _is_noise(text):
     t=text.strip(); tl=t.lower().strip()
     if len(t)<3: return True
@@ -250,6 +260,8 @@ def _is_qa(text):
     tl=text.lower()
     return any(kw in tl for kw in QA_KW)
 
+
+
 def _nearest_tag(cx,cy,words_pos,radius=600):
     best_tag,best_dist="",radius
     for wx,wy,word in words_pos:
@@ -258,6 +270,8 @@ def _nearest_tag(cx,cy,words_pos,radius=600):
             dist=((wx-cx)**2+(wy-cy)**2)**0.5
             if dist<best_dist: best_dist=dist; best_tag=word.rstrip(".,;)([]")
     return best_tag
+
+
 
 def _loc(cx,cy,pw,ph):
     nx,ny=cx/pw,cy/ph
@@ -288,6 +302,9 @@ def _tb_y(page):
             if by0>ph*0.75 and bx0>pw*0.50:
                 if by0<tb_y: tb_y=by0
     return max(tb_y,ph*0.80)
+
+
+
 
 def extract_all_markups(pdf_bytes):
     doc=fitz.open(stream=pdf_bytes,filetype="pdf")
@@ -338,6 +355,8 @@ def extract_all_markups(pdf_bytes):
 XN,XB,XL="1F3864","3D4BA0","E8EAF6"
 XW="FFFFFF"; XRB,XRF="FFEBEE","C62828"; XYB,XYF="FFF3E0","E65100"
 XGB,XGF="E8F5E9","2E7D32"; XA="F5F6FC"
+
+
 
 def xf(h): return PatternFill("solid",fgColor=h)
 def xft(bold=False,color="000000",size=10):
@@ -427,6 +446,8 @@ def build_summary(wb,all_results,filename):
         ws.row_dimensions[ri].height=16; ri+=1
     ws.freeze_panes="A4"
 
+
+
 def build_master_tab(wb,all_results):
     ws=wb.create_sheet("ALL MARKUPS")
     for col,w in zip("ABCDEFGH",[5,7,13,48,22,22,10,14]):
@@ -500,6 +521,8 @@ def build_excel(all_results,filename):
         build_page_tab(wb,f"Sheet {pg}",r["markups"],r["drawing_info"])
     return wb
 
+
+
 # ════════════════════════════════════════════════════════════
 # UI
 # ════════════════════════════════════════════════════════════
@@ -507,6 +530,8 @@ if not st.session_state.get("pdf_loaded"):
     st.markdown('<div class="sh">Upload QA-Marked Drawing PDF</div>',unsafe_allow_html=True)
 
 pdf_file=st.file_uploader("Upload PDF",type=["pdf"],label_visibility="collapsed")
+
+
 
 if not pdf_file:
     st.markdown("""<div style="border:2px dashed #5C6BC0;border-radius:16px;
@@ -517,11 +542,12 @@ if not pdf_file:
     <div style="font-size:13px;color:#4A4A6A">Supports Bluebeam · Adobe Acrobat · Any annotated PDF</div>
     </div>""",unsafe_allow_html=True)
     st.markdown("<br>",unsafe_allow_html=True)
-    c1,c2,c3=st.columns(3)
-    c1.markdown('<div class="fcard"><div class="ficon">🔍</div><div class="ftitle">Extracts All QA Annotations</div><div class="fdesc">FreeText comments — every typed QA reviewer comment captured</div></div>',unsafe_allow_html=True)
-    c2.markdown('<div class="fcard"><div class="ficon">🏷️</div><div class="ftitle">Auto HVAC Tag Detection</div><div class="fdesc">Automatically finds the nearest FCU, FD, OAF tag for each markup</div></div>',unsafe_allow_html=True)
-    c3.markdown('<div class="fcard"><div class="ficon">📊</div><div class="ftitle">Professional Excel Report</div><div class="fdesc">Summary + Master sheet + Per-page tabs with severity color coding</div></div>',unsafe_allow_html=True)
+    ##c1,c2,c3=st.columns(3)
+    ##c1.markdown('<div class="fcard"><div class="ficon">🔍</div><div class="ftitle">Extracts All QA Annotations</div><div class="fdesc">FreeText comments — every typed QA reviewer comment captured</div></div>',unsafe_allow_html=True)
+    ##c2.markdown('<div class="fcard"><div class="ficon">🏷️</div><div class="ftitle">Auto HVAC Tag Detection</div><div class="fdesc">Automatically finds the nearest FCU, FD, OAF tag for each markup</div></div>',unsafe_allow_html=True)
+    ##c3.markdown('<div class="fcard"><div class="ficon">📊</div><div class="ftitle">Professional Excel Report</div><div class="fdesc">Summary + Master sheet + Per-page tabs with severity color coding</div></div>',unsafe_allow_html=True)
     st.stop()
+
 
 if st.session_state.get("pdf_name")!=pdf_file.name:
     with st.spinner("Loading pages..."):
@@ -537,8 +563,11 @@ if st.session_state.get("pdf_name")!=pdf_file.name:
         st.session_state.update({"pdf_name":pdf_file.name,"pages":pages,
                                   "pdf_bytes":pdf_bytes,"current":1,"pdf_loaded":True})
 
+
 pages=st.session_state["pages"]; total_pages=len(pages)
 col_img,col_side=st.columns([3,1])
+
+
 
 with col_side:
     st.markdown(f'<div class="spanel"><h4>📋 {total_pages} Sheet(s) Loaded</h4><div style="font-size:12px;color:#4A4A6A">{pdf_file.name}</div></div>',unsafe_allow_html=True)
@@ -556,6 +585,8 @@ with col_side:
     st.markdown("<br>",unsafe_allow_html=True)
     st.info("Extracts QA annotations from **all pages** at once.")
     run_btn=st.button("🔍  Extract All QA Annotations",use_container_width=True,type="primary")
+
+
 
 with col_img:
     st.markdown(f'<div class="sh">Drawing Preview — Sheet {current} of {total_pages}</div>',unsafe_allow_html=True)
@@ -579,6 +610,8 @@ if run_btn:
     buf=BytesIO(); wb.save(buf); buf.seek(0)
     prog.progress(100)
     status.success(f"✅ {total} QA markups extracted from {len(pages_hit)} sheet(s)!")
+
+
 
     st.markdown('<div class="sh">Extraction Summary</div>',unsafe_allow_html=True)
     st.markdown(f"""<div class="mrow">
@@ -618,6 +651,8 @@ if run_btn:
         mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
         use_container_width=True,type="primary")
 
+
+
 st.markdown(f"""<hr><div style="text-align:center;color:#4A4A6A;font-size:12px;padding:8px 0">
-DrawCheck AI v3.0 &nbsp;|&nbsp; SG Design Nepal &nbsp;|&nbsp;
+DrawCheck AI v1.0 &nbsp;|&nbsp; SG Design Nepal &nbsp;|&nbsp;
 Extracts QA FreeText Annotations &nbsp;|&nbsp; No API required</div>""",unsafe_allow_html=True)
